@@ -15,6 +15,11 @@ jobs:
       with:
         php-version: '7.4'
 
+    - name: Install Composer
+      run: |
+        curl -sS https://getcomposer.org/installer | php
+        mv composer.phar /usr/local/bin/composer
+
     - name: Install Dependencies
       run: composer install
 
