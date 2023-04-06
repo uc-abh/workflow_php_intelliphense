@@ -4,7 +4,7 @@
 function Fibonacci($number)
 {
       
-    // if and else if to generate first two numbers
+    // if and else if to generate first two numbersf
     if ($number == 0) {
         return 0;
     } elseif ($number == 1) {
