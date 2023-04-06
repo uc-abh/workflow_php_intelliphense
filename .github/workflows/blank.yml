@@ -24,7 +24,10 @@ jobs:
       run: composer install
 
     - name: Install PHP Intelliphence
-      run: code --install-extension bmewburn.vscode-intelephense-client
+      run: |
+        export PATH="$PATH:/usr/local/bin"
+        echo "Installing PHP Intelliphence..."
+        /usr/bin/code-server --install-extension bmewburn.vscode-intelephense-client
 
     - name: Check PHP Intelliphence Installation
-      run: code --list-extensions | grep bmewburn.vscode-intelephense-client
+      run: code-server --list-extensions | grep bmewburn.vscode-intelephense-client
