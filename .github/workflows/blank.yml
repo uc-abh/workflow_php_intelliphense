@@ -1,45 +1,17 @@
-name: PHP IntelliSense
+name: PHP Intelephense
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-  build:
+  php-intelephense:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Install Visual Studio Code
-      run: |
-        curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
-        sudo install -o root -g root -m 644 microsoft.gpg /usr/share/keyrings/microsoft-archive-keyring.gpg
-        sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
-        sudo apt-get update
-        sudo apt-get install -y code
-
-    - name: Install PHP and PHP-XML
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y php php-xml
-
-    - name: Install PHP IntelliSense extension
-      run: |
-        code --install-extension felixfbecker.php-intellisense --force
-
-    - name: Check for PHP syntax errors
-      run: |
-        php -l index.php
-
-    - name: Run PHP IntelliSense
-      run: |
-        code --extensions-dir ./extensions --install-extension felixfbecker.php-intellisense
-        code --install-extension felixfbecker.php-intellisense --force
-
-    - name: Commit and push changes
-      uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: Update PHP code
-        branch: main
-        commit_options: '--no-verify'
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Install PHP Intelephense
+      run: code --install-extension bmewburn.vscode-intelephense-client --force
+    - name: Run PHP Intelephense
+      run: php index.php
