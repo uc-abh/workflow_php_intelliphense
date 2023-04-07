@@ -22,7 +22,7 @@ jobs:
 
     - name: Check for PHP syntax errors
       run: |
-        php -l ./path/to/your/php/file.php
+        php -l index.php
 
     - name: Run PHP IntelliSense
       run: |
