@@ -11,6 +11,11 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+    - name: Install PHP and Visual Studio Code
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y php-cli
+        sudo snap install --classic code
     - name: Install PHP Intelephense
       run: code --install-extension bmewburn.vscode-intelephense-client --force
     - name: Run PHP Intelephense
