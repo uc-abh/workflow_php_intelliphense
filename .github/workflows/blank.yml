@@ -2,21 +2,36 @@ name: PHP IntelliSense
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
-  analyze:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14.x'
-      - name: Install PHP IntelliSense extension
-        run: |
-          code-server --install-extension felixfbecker.php-intellisense
-      - name: Analyze PHP code
-        run: |
-          code-server --wait php /path/to/your/code
+    - uses: actions/checkout@v2
+
+    - name: Install PHP and PHP-XML
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y php php-xml
+
+    - name: Install PHP IntelliSense extension
+      run: |
+        code --install-extension felixfbecker.php-intellisense --force
+
+    - name: Check for PHP syntax errors
+      run: |
+        php -l ./path/to/your/php/file.php
+
+    - name: Run PHP IntelliSense
+      run: |
+        code --extensions-dir ./extensions --install-extension felixfbecker.php-intellisense
+        code --install-extension felixfbecker.php-intellisense --force
+
+    - name: Commit and push changes
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Update PHP code
+        branch: main
+        commit_options: '--no-verify'
